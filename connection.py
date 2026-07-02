@@ -1,8 +1,7 @@
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
-from dotenv import load_dotenv
-
+from database.connection import engine, Base, SessionLocal
 # Tenta carregar o arquivo .env
 load_dotenv()
 
