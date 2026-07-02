@@ -1,7 +1,8 @@
 import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
-from conexão import engine, Base, SessionLocal
+
 # Tenta carregar o arquivo .env
 load_dotenv()
 
@@ -13,7 +14,7 @@ if not DATABASE_URL:
     DATABASE_URL = "sqlite:///banco_local.db"
 
 # Ajuste automático se for o link do Neon/Postgres antigo
-if DATABASE_URL.startswith("postgres://"):
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 # Se for SQLite, precisa de uma configuração extra de segurança
@@ -22,5 +23,6 @@ if DATABASE_URL.startswith("sqlite"):
 else:
     engine = create_engine(DATABASE_URL, echo=False)
 
+# Aqui criamos o SessionLocal e a Base que o main.py tanto procura!
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
