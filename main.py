@@ -1,3 +1,10 @@
+import os
+import sys
+
+# Força o Python a incluir o diretório atual no caminho de busca de módulos
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+
+# Agora as suas importações locais vão funcionar sem erro no Render
 import streamlit as st
 import pandas as pd
 from datetime import datetime
